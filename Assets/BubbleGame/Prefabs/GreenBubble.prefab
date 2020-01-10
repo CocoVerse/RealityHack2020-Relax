@@ -109,6 +109,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorCode: 0
+  spawnOnPop: {fileID: 5015185719262038426, guid: 997a8399bbc549b40a04ff98fd3c1eff,
+    type: 3}
   lifespan: 3
   speed: 1
 --- !u!95 &-6188381077247370508
