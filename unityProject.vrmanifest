@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.relaxhdrp.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\ResVR\\wjlc\\rhack\\RealityHack2020-Relax\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\ThreeSpace\\wjlc\\rhack\\RelaxApp\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "relax-hdrp [Testing]"
