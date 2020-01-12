@@ -9,6 +9,7 @@ public class Pop : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         var bubble = other.GetComponent<BubbleMove>();
         if (bubble != null) HitBubble(bubble);
+
     }
 
     private void HitBubble(BubbleMove bubble) {

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
-using TMPro;
 
 public class BubbleGameScoreTracker : MonoBehaviour {
-    [SerializeField] float scoreDrainRate = 0.1f;
+    [SerializeField] float scoreDrainGravity = 1f;
+
+    private float scoreDrainRate = 0f;
 
     public ReactiveProperty<int> Combo { get; } = new ReactiveProperty<int>(0);
 
@@ -32,28 +33,18 @@ public class BubbleGameScoreTracker : MonoBehaviour {
 
     private void PumpScore() {
         rawScore.Value = rawScore.Value + 0.1f;
+        scoreDrainRate = 0;
     }
 
     private void DrainScore() {
-        rawScore.Value = Mathf.Max(0, rawScore.Value - Time.deltaTime * scoreDrainRate);
-    }
-}
+        scoreDrainRate += scoreDrainGravity * Time.deltaTime;
 
-public class BubbleGameComboMeter : MonoBehaviour {
-    [SerializeField] TextMeshPro displayText;
-
-    [SerializeField] BubbleGameScoreTracker scores;
-
-    void Start() {
-        scores.Combo.Subscribe(v => displayText.text = $"x{v}").AddTo(this);
-    }
-}
-
-public class BubbleGameVolumeController : MonoBehaviour {
-    [SerializeField] AudioSource source;
-    [SerializeField] BubbleGameScoreTracker scores;
-
-    void Start() {
-        scores.MainTrackVolume.Subscribe(v => source.volume = v).AddTo(this);
+        var nextScore = rawScore.Value - Time.deltaTime * scoreDrainRate;
+        if(nextScore>0) {
+            rawScore.Value = nextScore;
+        } else {
+            rawScore.Value = 0;
+            scoreDrainRate = 0;
+        }
     }
 }

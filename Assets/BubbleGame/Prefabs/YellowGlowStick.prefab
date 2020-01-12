@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 8110040634224135825, guid: 06d16f162a801ae458a9ddc401657cc1,
         type: 3}
       propertyPath: m_Name
-      value: GlowStick (1)
+      value: YellowGlowStick
       objectReference: {fileID: 0}
     - target: {fileID: 8110040634224135829, guid: 06d16f162a801ae458a9ddc401657cc1,
         type: 3}

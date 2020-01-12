@@ -13,6 +13,8 @@ public class BubbleMove : MonoBehaviour
     [SerializeField] float speed = 0.5f;
     private float startTime;
 
+    public BubbleGameScoreTracker ScoreTracker { get; set; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,13 @@ public class BubbleMove : MonoBehaviour
         if (spawnOnPop != null) {
             var obj = Instantiate(spawnOnPop, transform.position, transform.rotation);
             obj.transform.localScale = transform.localScale;
+        }
+        if (ScoreTracker != null) {
+            if (good) {
+                ScoreTracker.NotifyHit();
+            } else {
+                ScoreTracker.NotifyMiss();
+            }
         }
         Destroy(gameObject);
     }

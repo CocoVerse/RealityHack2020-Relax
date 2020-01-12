@@ -8,13 +8,18 @@ public class BubbleTrack : MonoBehaviour
     [SerializeField] int rows = 4;
     [SerializeField] int columns = 6;
     [SerializeField] float gap = .25f;
-    [SerializeField] int num = 4;
 
-    [SerializeField] List<GameObject> prefabs;
+    [SerializeField] float bubblesPerBeatMean = 2;
+    [SerializeField] float bubblesPerBeatStdev = 1f;
+
+    [SerializeField] List<BubbleMove> prefabs;
+
+    [SerializeField] BubbleGameScoreTracker scoreTracker;
 
     float Interval => 60f / bpm;
 
     private float tq = 0;
+    private int nextColorIndex = 0;
 
     // Update is called once per frame
     void Update()
@@ -29,7 +34,11 @@ public class BubbleTrack : MonoBehaviour
     void Spawn() {
         var filled = new HashSet<(int, int)>();
 
-        var n = Mathf.Min(num, rows * columns);
+        var n = Mathf.Clamp(
+            MathUtil.BoxMuller(bubblesPerBeatMean,bubblesPerBeatStdev,Random.value,Random.value),
+            0,
+            rows * columns
+        );
 
         for(int i = 0; i < n; i++) {
             (int, int) x;
@@ -38,15 +47,23 @@ public class BubbleTrack : MonoBehaviour
 
             } while (!filled.Add(x));
         }
-
-        int k = 0;
+        
         var o0 = new Vector3(0.5f * (columns - 1), 0.5f * (rows - 1));
         foreach (var (x,y) in filled) {
             var offset = gap * (new Vector3(x, y) - o0);
             var position = transform.position + transform.rotation*offset;
-            Instantiate(prefabs[k], position, transform.rotation);
-            k++;
-            k %= prefabs.Count;
+            var obj = Instantiate(prefabs[nextColorIndex], position, transform.rotation);
+            obj.ScoreTracker = scoreTracker;
+            nextColorIndex++;
+            nextColorIndex %= prefabs.Count;
         }
+    }
+}
+
+
+public class MathUtil {
+    public static float BoxMuller(float mean, float stdev, float u0, float u1) {
+        var y = Mathf.Sqrt(-2f * Mathf.Log(u0)) * Mathf.Sin(2f * Mathf.PI * u1);
+        return mean + stdev * y;
     }
 }
