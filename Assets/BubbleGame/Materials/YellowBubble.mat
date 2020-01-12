@@ -108,7 +108,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_33CEDF9E: 0.1
+    - Vector1_33CEDF9E: 0.2
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -232,7 +232,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_97F61456: {r: 1, g: 0.91404873, b: 0, a: 1}
-    - Color_FDAA28CD: {r: 1, g: 0.95296633, b: 0, a: 1}
+    - Color_FDAA28CD: {r: 0.9843137, g: 0.92941177, b: 0.3254902, a: 1}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -249,7 +249,7 @@ Material:
     - _UVDetailsMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
-    - q: {r: 1, g: 0.5946069, b: 0, a: 1}
+    - q: {r: 1, g: 1, b: 0.5058824, a: 1}
 --- !u!114 &2257863880223384558
 MonoBehaviour:
   m_ObjectHideFlags: 11

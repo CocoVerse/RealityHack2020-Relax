@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GreenGlowstick
+  m_Name: PinkGlowstick
   m_Shader: {fileID: -6465566751694194690, guid: 730911ae0c91f5e40aa6de0f500779d9,
     type: 3}
   m_ShaderKeywords: 
@@ -108,7 +108,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_12EEC0E9: 30
+    - Vector1_12EEC0E9: 14
     - Vector1_5170F0E9: 0
     - _AORemapMax: 1
     - _AORemapMin: 0
@@ -232,8 +232,8 @@ Material:
     - _ZTestTransparent: 4
     - _ZWrite: 1
     m_Colors:
-    - Color_B068A875: {r: 0, g: 1, b: 0.5882353, a: 0}
-    - Color_B6CF9D34: {r: 0, g: 1, b: 0.4, a: 0}
+    - Color_B068A875: {r: 1, g: 0.43137255, b: 0.8156863, a: 0}
+    - Color_B6CF9D34: {r: 0.8627451, g: 0.29803923, b: 0.53333336, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
