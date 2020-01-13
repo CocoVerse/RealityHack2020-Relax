@@ -4,9 +4,55 @@ using System.Linq;
 using UnityEngine;
 using UniRx;
 using UnityEngine.Playables;
+using System;
 
-public class BubbleTrack : MonoBehaviour
-{
+[Serializable]
+public class BubblePrefabGroup {
+    [SerializeField] List<BubbleMove> prefabs;
+
+}
+
+public class BubbleTrack : MonoBehaviour {
+
+    public class BubbleHelperGroup {
+        public IReadOnlyDictionary<BubbleColorCode, BubbleHelper> Helpers { get; }
+
+        private BubbleColorCode nextColorCode;
+
+        public BubbleHelperGroup(List<BubbleMove> prefabs) { 
+            var dict = new Dictionary<BubbleColorCode, BubbleHelper>();
+            foreach (var prefab in prefabs) {
+                dict.Add(prefab.ColorCode, new BubbleHelper(prefab));
+            }
+            Helpers = dict;
+
+            nextColorCode = UnityEngine.Random.value > 0.5f ? BubbleColorCode.Yellow : BubbleColorCode.Pink;
+        }
+
+        public BubbleHelper NextColorBubble() {
+            var obj = Helpers[nextColorCode];
+            nextColorCode = nextColorCode == BubbleColorCode.Pink ? BubbleColorCode.Yellow : BubbleColorCode.Pink;
+            return obj;
+        }
+    }
+
+    public class BubbleHelper {
+        private BubbleMove prefab;
+
+        readonly ObjectPool<BubblePopEffect> popEffectPool;
+
+        public BubbleHelper(BubbleMove prefab) {
+            this.prefab = prefab;
+            this.popEffectPool = new ObjectPool<BubblePopEffect>(() => Instantiate(prefab.PopEffectPrefab));
+        }
+        
+        public BubbleMove GetBubbleInstance(Vector3 position, Quaternion rotation) {
+            var obj = Instantiate(prefab, position, rotation);
+            obj.PopEffectGetter = popEffectPool.GetOne;
+            return obj;
+        }
+    }
+
     [SerializeField] float bpm = 120;
     [SerializeField] int rows = 4;
     [SerializeField] int columns = 6;
@@ -14,41 +60,33 @@ public class BubbleTrack : MonoBehaviour
 
     [SerializeField] AutoLevelGenerator sequence;
     
-    [SerializeField] List<BubbleMove> prefabs;
-    [SerializeField] BubbleMove levelUpBubblePrefab;
-    [SerializeField] List<BubblePopEffect> popEffectPrefabs;
+    [SerializeField] List<BubbleMove> bubblePrefabs;
 
     [SerializeField] BubbleGameScoreTracker scoreTracker;
 
-
-    private Dictionary<BubbleColorCode, ObjectPool<BubblePopEffect>> popEffectPools;
-
     float Interval => currentLevelParameters?.GetBatchInterval(bpm) ?? float.MaxValue;
 
-    private float tq = 0;
-    private int nextColorIndex = 0;
-
     private BubbleGameLevelParameters currentLevelParameters;
+    private BubbleHelperGroup bubbleHelperGroup;
+    
+    private float timeSinceWave = 0;
 
     private void Start() {
-        popEffectPools = new Dictionary<BubbleColorCode, ObjectPool<BubblePopEffect>>();
-        foreach(var effect in popEffectPrefabs) {
-            popEffectPools.Add(effect.ColorCode, new ObjectPool<BubblePopEffect>(() => Instantiate(effect)));
-        }
+        bubbleHelperGroup = new BubbleHelperGroup(bubblePrefabs);
         scoreTracker.Level.Subscribe(i => currentLevelParameters = sequence.GetLevel(i));
     }
-
-    // Update is called once per frame
+    
     void Update()
     { 
-        tq += Time.deltaTime;
-        if(tq > Interval) {
-            tq %= Interval;
-            Spawn();
+        timeSinceWave += Time.deltaTime;
+        var interval = Interval;
+        if(timeSinceWave > interval) {
+            timeSinceWave %= interval;
+            SpawnWave();
         }
     }
 
-    void Spawn() {
+    void SpawnWave() {
         var filled = new HashSet<(int, int)>();
 
         var n = Mathf.Clamp(
@@ -60,7 +98,7 @@ public class BubbleTrack : MonoBehaviour
         for(int i = 0; i < n; i++) {
             (int, int) x;
             do {
-                x = (Random.Range(0, columns), Random.Range(0, rows));
+                x = (UnityEngine.Random.Range(0, columns), UnityEngine.Random.Range(0, rows));
             } while (!filled.Add(x));
         }
         
@@ -69,25 +107,21 @@ public class BubbleTrack : MonoBehaviour
             var offset = gap * (new Vector3(x, y) - o0);
             var position = transform.position + transform.rotation*offset;
 
-            var obj = NextBubble(position); 
+            var obj = NextHelper().GetBubbleInstance(position,transform.rotation); 
 
             obj.ScoreTracker = scoreTracker;
             obj.Speed = currentLevelParameters.BubbleSpeed;
-
-            if (popEffectPools.TryGetValue(obj.ColorCode, out var pool)) obj.PopEffectGetter = pool.GetOne;
         }
     }
 
-    BubbleMove NextBubble(Vector3 position) {
+    BubbleHelper NextHelper() {
         if (scoreTracker.IsReadyForLevelUp) {
-            var obj = Instantiate(levelUpBubblePrefab, position, transform.rotation);
             scoreTracker.ClearLevelUpAvailability();
-            return obj;
+            return bubbleHelperGroup.Helpers[BubbleColorCode.LevelUp];
+        } else if (currentLevelParameters.GetRandomIsNeutral()) {
+            return bubbleHelperGroup.Helpers[BubbleColorCode.Neutral];
         } else {
-            var obj = Instantiate(prefabs[nextColorIndex], position, transform.rotation);
-            nextColorIndex++;
-            nextColorIndex %= prefabs.Count;
-            return obj;
+            return bubbleHelperGroup.NextColorBubble();
         }
     }
 }

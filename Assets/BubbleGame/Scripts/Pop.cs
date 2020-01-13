@@ -13,6 +13,17 @@ public class Pop : MonoBehaviour
     }
 
     private void HitBubble(BubbleMove bubble) {
-        if (bubble.ColorCode == BubbleColorCode.LevelUp || bubble.ColorCode == colorCode) bubble.Pop(BubblePopCategory.Hit);
+        if (AreCompatible(colorCode, bubble.ColorCode)) bubble.Pop(BubblePopCategory.Hit);
+    }
+
+    private static bool AreCompatible(BubbleColorCode a, BubbleColorCode b) {
+        switch (a) {
+            case BubbleColorCode.Pink:
+                return b != BubbleColorCode.Yellow;
+            case BubbleColorCode.Yellow:
+                return b != BubbleColorCode.Pink;
+            default:
+                throw new ArgumentException();
+        }
     }
 }

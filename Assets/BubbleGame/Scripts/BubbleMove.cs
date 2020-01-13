@@ -20,6 +20,9 @@ public class BubbleMove : MonoBehaviour {
 
     private float travelDistance = 0;
 
+    [SerializeField] BubblePopEffect popEffectPrefab;
+    public BubblePopEffect PopEffectPrefab => popEffectPrefab;
+
     // Start is called before the first frame update
     void Start() {
         if (ScoreTracker != null) {

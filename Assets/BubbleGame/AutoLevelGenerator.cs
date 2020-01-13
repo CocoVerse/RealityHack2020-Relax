@@ -18,10 +18,12 @@ public class AutoLevelGenerator : ScriptableObject
 
         var batchesPerBeat_raw = speed / bubble_clearance;
         var batchesPerBeat = Mathf.Pow(2, Mathf.Floor(Mathf.Log(batchesPerBeat_raw, 2)));
-
-
+        
         var mean = 0.5f + 0.6f * raw_difficulty;
         var stdev = 0.5f + raw_difficulty * 0.2f;
-        return new BubbleGameLevelParameters(batchesPerBeat, mean, stdev, speed);
+
+        var neutralChance = Mathf.SmoothStep(1f, Mathf.Pow(0.15f, raw_difficulty), raw_difficulty);
+
+        return new BubbleGameLevelParameters(batchesPerBeat, mean, stdev, speed, neutralChance);
     }
 }

@@ -179,9 +179,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102b125c4446a8a44bd67b3408e8965a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorCode: 2
+  colorCode: 3
   travelBeforePop: 5
   growAnimation: {fileID: 1960762035306127551}
+  popEffectPrefab: {fileID: 3650886541948500382, guid: cc838a0e9d8867a458a5aedc4b931adb,
+    type: 3}
 --- !u!1 &9168820651800882502
 GameObject:
   m_ObjectHideFlags: 0
