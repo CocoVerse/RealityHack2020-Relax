@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PinkGlowstick
-  m_Shader: {fileID: -6465566751694194690, guid: 730911ae0c91f5e40aa6de0f500779d9,
+  m_Shader: {fileID: -6465566751694194690, guid: 419e0046562e11c458f5fa3ae62bf717,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -108,8 +108,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_12EEC0E9: 14
+    - Vector1_12EEC0E9: 21
     - Vector1_5170F0E9: 0
+    - Vector1_C67CC3BD: 0
     - _AORemapMax: 1
     - _AORemapMin: 0
     - _ATDistance: 1
@@ -154,6 +155,8 @@ Material:
     - _DoubleSidedEnable: 0
     - _DoubleSidedNormalMode: 1
     - _DstBlend: 0
+    - _EmissionEdgeBlend: 0.95
+    - _EmissionFactor: 25
     - _EmissiveColorMode: 1
     - _EmissiveExposureWeight: 1
     - _EmissiveIntensity: 1
@@ -186,7 +189,7 @@ Material:
     - _PPDMinSamples: 5
     - _PPDPrimitiveLength: 1
     - _PPDPrimitiveWidth: 1
-    - _ReceivesSSR: 1
+    - _ReceivesSSR: 0
     - _RefractionModel: 0
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
@@ -198,11 +201,11 @@ Material:
     - _SpecularAAThreshold: 0.2
     - _SpecularOcclusionMode: 1
     - _SrcBlend: 1
-    - _StencilRef: 2
-    - _StencilRefDepth: 0
+    - _StencilRef: 0
+    - _StencilRefDepth: 32
     - _StencilRefDistortionVec: 64
     - _StencilRefGBuffer: 2
-    - _StencilRefMV: 128
+    - _StencilRefMV: 160
     - _StencilWriteMask: 3
     - _StencilWriteMaskDepth: 48
     - _StencilWriteMaskDistortionVec: 64
@@ -234,6 +237,7 @@ Material:
     m_Colors:
     - Color_B068A875: {r: 1, g: 0.43137255, b: 0.8156863, a: 0}
     - Color_B6CF9D34: {r: 0.8627451, g: 0.29803923, b: 0.53333336, a: 0}
+    - _Away: {r: 0.86274517, g: 0.29803923, b: 0.53333336, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
@@ -242,6 +246,7 @@ Material:
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
+    - _Facing: {r: 1, g: 0.43137258, b: 0.81568635, a: 0}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _MainColor: {r: 0.9, g: 0.9, b: 0.9, a: 0}

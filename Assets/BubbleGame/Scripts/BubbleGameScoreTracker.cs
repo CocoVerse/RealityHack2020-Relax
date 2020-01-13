@@ -6,14 +6,16 @@ using UniRx;
 using System.Linq;
 
 public class BubbleGameScoreTracker : MonoBehaviour {
-    private const float ACCURACY_TRACKER_WINDOW = 15f;
+    // Increase to average the accuracy over a longer time.
+    private const float ACCURACY_TRACKER_WINDOW = 3f;
+
+    // Increase toward 1 to decrease the change in score over time.
+    private const float SCORE_DECAY_FACTOR = 0.8f;
     private const float LEVELUP_BUBBLE_TIME = 5f;
     private const float MUSIC_DAMPEN_BELOW = 0.3f;
     private const float INITIAL_SCORE = 0.0f;
     private const float LEVEL_RESET_SCORE = 0.5f;
 
-    // Increase to cause the score to more rapidly converge to the current accuracy.
-    [SerializeField] float scoreDecayFactor = 0.2f;
 
     [SerializeField] float levelRegressAt = 0.2f;
 
@@ -29,7 +31,7 @@ public class BubbleGameScoreTracker : MonoBehaviour {
     public bool IsReadyForLevelUp => levelUpReadyTracker.Ready(Time.time);
 
     private ExponentialTracker _scoreMachine;
-    private ExponentialTracker ScoreMachine => _scoreMachine ?? (_scoreMachine = new ExponentialTracker(INITIAL_SCORE, scoreDecayFactor));
+    private ExponentialTracker ScoreMachine => _scoreMachine ?? (_scoreMachine = new ExponentialTracker(INITIAL_SCORE, SCORE_DECAY_FACTOR));
     public IObservable<float> Heat =>  ScoreMachine.Score;
 
     private IObservable<float> _mainTrackVolume;
