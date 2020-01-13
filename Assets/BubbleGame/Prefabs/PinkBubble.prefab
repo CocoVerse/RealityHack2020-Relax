@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -6188381077247370508}
   - component: {fileID: -6115316155201153976}
   m_Layer: 0
-  m_Name: GreenBubble
+  m_Name: PinkBubble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   colorCode: 0
   spawnOnPop: {fileID: 5015185719262038426, guid: 997a8399bbc549b40a04ff98fd3c1eff,
     type: 3}
-  lifespan: 3
-  speed: 1
+  travelBeforePop: 5
+  growAnimation: {fileID: -6188381077247370508}
 --- !u!95 &-6188381077247370508
 Animator:
   serializedVersion: 3

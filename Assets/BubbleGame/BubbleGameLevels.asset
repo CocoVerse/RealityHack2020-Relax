@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8adc684dd122cb04dadfae512743230d, type: 3}
+  m_Name: BubbleGameLevels
+  m_EditorClassIdentifier: Assembly-CSharp::BubbleGameLevelSequence
+  levels:
+  - batchesPerBeat: 0.5
+    bubblesPerBeatAtOneStdev: {x: 0, y: 0.75}
+    bubbleSpeed: 1
+  - batchesPerBeat: 0.5
+    bubblesPerBeatAtOneStdev: {x: 0.5, y: 1.25}
+    bubbleSpeed: 1
+  - batchesPerBeat: 1
+    bubblesPerBeatAtOneStdev: {x: 0.75, y: 1.75}
+    bubbleSpeed: 1.5
+  - batchesPerBeat: 1
+    bubblesPerBeatAtOneStdev: {x: 1, y: 2.5}
+    bubbleSpeed: 1.5
+  - batchesPerBeat: 2
+    bubblesPerBeatAtOneStdev: {x: 1.5, y: 3.5}
+    bubbleSpeed: 2

@@ -111,8 +111,8 @@ MonoBehaviour:
   colorCode: 1
   spawnOnPop: {fileID: 5015185719262038426, guid: a0e9abb6e98def443be9438960274211,
     type: 3}
-  lifespan: 3
-  speed: 1
+  travelBeforePop: 5
+  growAnimation: {fileID: -6188381077247370508}
 --- !u!95 &-6188381077247370508
 Animator:
   serializedVersion: 3

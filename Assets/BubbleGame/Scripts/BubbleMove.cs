@@ -1,45 +1,55 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using UniRx;
 using UnityEngine;
-public class BubbleMove : MonoBehaviour
-{
+
+public class BubbleMove : MonoBehaviour {
     [SerializeField] BubbleColorCode colorCode;
-    [SerializeField] GameObject spawnOnPop;
 
     public BubbleColorCode ColorCode => colorCode;
 
-    [SerializeField] float lifespan = 2f;
-    [SerializeField] float speed = 0.5f;
-    private float startTime;
+    [SerializeField] float travelBeforePop = 5f;
+    [SerializeField] Animator growAnimation;
+    
+    private IDisposable disposable;
 
     public BubbleGameScoreTracker ScoreTracker { get; set; }
+    public Func<BubblePopEffect> PopEffectGetter { get; set; }
+
+    public float Speed { get; internal set; } = 1f;
+
+    private float travelDistance = 0;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        startTime = Time.time;
+    void Start() {
+        if (ScoreTracker != null) {
+            Action clearPop = () => Pop(BubblePopCategory.Other);
+            ScoreTracker.OnClearBubbles += clearPop;
+            this.disposable = Disposable.Create(() => ScoreTracker.OnClearBubbles -= clearPop);
+        }
+        growAnimation.speed = Speed;
     }
 
-    internal void Pop(bool good) {
-        if (spawnOnPop != null) {
-            var obj = Instantiate(spawnOnPop, transform.position, transform.rotation);
+    private void OnDestroy() {
+        disposable?.Dispose();
+    }
+
+    internal void Pop(BubblePopCategory category) {
+        if (PopEffectGetter != null) {
+            var obj = PopEffectGetter();
+            obj.transform.SetPositionAndRotation(transform.position, transform.rotation);
             obj.transform.localScale = transform.localScale;
         }
-        if (ScoreTracker != null) {
-            if (good) {
-                ScoreTracker.NotifyHit();
-            } else {
-                ScoreTracker.NotifyMiss();
-            }
-        }
+        ScoreTracker?.NotifyPop(category);
+        if (category == BubblePopCategory.Hit && colorCode == BubbleColorCode.LevelUp) ScoreTracker?.LevelUp();
         Destroy(gameObject);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        transform.position += transform.forward * Time.deltaTime * speed;
-        if (Time.time > startTime + lifespan) Pop(false);
+    void Update() {
+        var delta = Time.deltaTime * Speed;
+        transform.position += transform.forward * delta;
+        travelDistance += delta;
+        if (travelDistance > travelBeforePop) Pop(BubblePopCategory.Miss);
     }
 }

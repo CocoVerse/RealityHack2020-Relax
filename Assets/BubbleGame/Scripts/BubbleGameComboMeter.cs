@@ -8,6 +8,7 @@ public class BubbleGameComboMeter : MonoBehaviour {
     [SerializeField] BubbleGameScoreTracker scores;
 
     void Start() {
-        scores.Combo.Subscribe(v => displayText.text = $"x{v}").AddTo(this);
+        scores.Heat.Subscribe(v => displayText.text = $"{v:n3}");
+        //scores.Combo.Subscribe(v => displayText.text = $"x{v}").AddTo(this);
     }
 }

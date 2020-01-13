@@ -13,6 +13,6 @@ public class Pop : MonoBehaviour
     }
 
     private void HitBubble(BubbleMove bubble) {
-        if (bubble.ColorCode == colorCode) bubble.Pop(true);
+        if (bubble.ColorCode == BubbleColorCode.LevelUp || bubble.ColorCode == colorCode) bubble.Pop(BubblePopCategory.Hit);
     }
 }

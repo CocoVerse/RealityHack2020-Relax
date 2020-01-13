@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd95788c27f6c841a52d7763d01cca3, type: 3}
+  m_Name: Bubble Pop Sounds
+  m_EditorClassIdentifier: 
+  items:
+  - weight: 9
+    sound: {fileID: 8300000, guid: a189172c72c0bb141a9e89d02d0a6da1, type: 3}
+  - weight: 5
+    sound: {fileID: 8300000, guid: 3f442f35f057ba44a863e50257fc63a4, type: 3}
+  - weight: 5
+    sound: {fileID: 8300000, guid: a37511daee9bad045b959cad9bb0f5d7, type: 3}
+  - weight: 1
+    sound: {fileID: 8300000, guid: 4f823cff15f8d114894c567585eba90d, type: 3}
