@@ -61,7 +61,7 @@ MonoBehaviour:
   colorCode: 0
   travelBeforePop: 5
   growAnimation: {fileID: 4421839706329446837}
-  popEffectPrefab: {fileID: 3650886541948500382, guid: 997a8399bbc549b40a04ff98fd3c1eff,
+  popEffectPrefab: {fileID: 3650886541948500382, guid: d10a886ea24d383459f0727b8c45951a,
     type: 3}
 --- !u!1 &1985120657666802265
 GameObject:
