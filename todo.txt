@@ -1,0 +1,20 @@
+[x] sabers better colors
+[x] neutral bubble
+toggleable grab
+fewer bubbles per wave
+longer tail of neutral bubbles
+[x] levelup bubble same size
+[x] sabers longer
+saber trails
+[x] fix references to _0 assets in mainscene
+[x] add second song
+[x] integrate crowd noises
+[x] dj booth video
+[x] animate characters
+[x] bubble pop colors
+game doesn't start until sabers picked up
+end game and display score when sabers dropped for time
+optimization
+floodlight spin
+re-add low-score attenuation
+cheering on level up / down

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abd95788c27f6c841a52d7763d01cca3, type: 3}
+  m_Name: RobotNoises
+  m_EditorClassIdentifier: 
+  items:
+  - weight: 0.05
+    sound: {fileID: 8300000, guid: ae345cfde7c46564f8f58a03f73837c3, type: 3}
+  - weight: 0.05
+    sound: {fileID: 8300000, guid: fc80e36c73840864e981050cc563aab8, type: 3}
+  - weight: 0.05
+    sound: {fileID: 8300000, guid: 38fd178d6c81eef4d9c77e325910bc2f, type: 3}
+  - weight: 0.5
+    sound: {fileID: 8300000, guid: bf76b54063b637e4b8dc639d47437cc5, type: 3}
+  - weight: 0.5
+    sound: {fileID: 8300000, guid: 9b67cc78fb2dba74799f4828ce2d36aa, type: 3}
+  - weight: 0.5
+    sound: {fileID: 8300000, guid: 7985545a2d7a52542b6827cdaaaea384, type: 3}
+  - weight: 0.5
+    sound: {fileID: 8300000, guid: 1590cd0790777a9408ba10c7197308fc, type: 3}
+  - weight: 0.5
+    sound: {fileID: 8300000, guid: a2b6b553c021c8b43bf1befdd28eb89b, type: 3}
+  - weight: 0.25
+    sound: {fileID: 8300000, guid: 65b6923189b17674c80c1014ff6fe833, type: 3}

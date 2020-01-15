@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0f4118f90390347adcb58b4e483a47, type: 3}
+  m_Name: Retrowave
+  m_EditorClassIdentifier: 
+  backgroundAmbience: {fileID: 8300000, guid: 97877e63a08d626488341556b807027e, type: 3}
+  mainTrack: {fileID: 8300000, guid: 111c310f97bb9e641a3e510fd124df04, type: 3}
+  guideBeat: {fileID: 8300000, guid: db6b8bcac27c5094e86afa317cdacceb, type: 3}
+  mainTrackLowEQ: {fileID: 8300000, guid: 864a2c93dcc47534982336a200be06b2, type: 3}
+  mainTrackHighEQ: {fileID: 8300000, guid: 7f611fa5d2146264587a2c85c921ee3d, type: 3}
+  bpm: 105

@@ -53,7 +53,8 @@ public class BubbleTrack : MonoBehaviour {
         }
     }
 
-    [SerializeField] float bpm = 120;
+    private int bpm = 60;
+    
     [SerializeField] int rows = 4;
     [SerializeField] int columns = 6;
     [SerializeField] float gap = .25f;
@@ -64,6 +65,9 @@ public class BubbleTrack : MonoBehaviour {
 
     [SerializeField] BubbleGameScoreTracker scoreTracker;
 
+    [SerializeField] MusicManager musicManager;
+    
+
     float Interval => currentLevelParameters?.GetBatchInterval(bpm) ?? float.MaxValue;
 
     private BubbleGameLevelParameters currentLevelParameters;
@@ -72,8 +76,13 @@ public class BubbleTrack : MonoBehaviour {
     private float timeSinceWave = 0;
 
     private void Start() {
+        musicManager.SelectedMusicGroup.Subscribe(ApplyMusicGroup).AddTo(this);
         bubbleHelperGroup = new BubbleHelperGroup(bubblePrefabs);
         scoreTracker.Level.Subscribe(i => currentLevelParameters = sequence.GetLevel(i));
+    }
+
+    void ApplyMusicGroup(MusicGroup musicGroup) {
+        bpm = musicGroup.bpm;
     }
     
     void Update()
