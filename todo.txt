@@ -12,8 +12,8 @@ saber trails
 [x] dj booth video
 [x] animate characters
 [x] bubble pop colors
-game doesn't start until sabers picked up
-end game and display score when sabers dropped for time
+[x] game doesn't start until sabers picked up
+[x] end game and display score when sabers dropped for time
 optimization
 floodlight spin
 re-add low-score attenuation

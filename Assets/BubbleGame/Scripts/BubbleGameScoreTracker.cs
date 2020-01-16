@@ -12,12 +12,14 @@ public class BubbleGameScoreTracker : MonoBehaviour {
     // Increase toward 1 to decrease the change in score over time.
     private const float SCORE_DECAY_FACTOR = 0.8f;
     private const float LEVELUP_BUBBLE_TIME = 5f;
-    private const float MUSIC_DAMPEN_BELOW = 0.3f;
+    private const float MUSIC_DAMPEN_BELOW = 0.25f;
     private const float INITIAL_SCORE = 0.0f;
-    private const float LEVEL_RESET_SCORE = 0.5f;
+    private const float LEVEL_RESET_SCORE = 0.25f;
 
 
     [SerializeField] float levelRegressAt = 0.2f;
+
+    [SerializeField] BubbleGameStateManager stateManager;
 
     private int level;
 
@@ -40,12 +42,54 @@ public class BubbleGameScoreTracker : MonoBehaviour {
     RollingAverage accuracyTracker = new RollingAverage(ACCURACY_TRACKER_WINDOW);
     ConditionMetForDurationTracker levelUpReadyTracker = new ConditionMetForDurationTracker(LEVELUP_BUBBLE_TIME);
 
+    private ReactiveProperty<int> highestScore = new ReactiveProperty<int>(0);
+    public IObservable<int> CurrentSessionScore => highestScore;
+
+    private bool doScoreUpdate = false;
+
+    private void Start() {
+        stateManager.IsRunning.Subscribe(ApplyRunningState).AddTo(this);
+        Level.CombineLatest(Heat, ComputeMomentaryScore).Subscribe(CheckHighestScore).AddTo(this);
+    }
+
+    void CheckHighestScore(int score) {
+        if (highestScore.Value < score) highestScore.Value = score;
+    }
+
+    static int ComputeMomentaryScore(int level, float heat) {
+        return Mathf.CeilToInt(1000f * (level + heat));
+    }
+
     void Update() {
-        UpdateScore();
-        if (Input.GetKeyDown(KeyCode.R)) {
-            SetLevel(Level.Value);
+        if (doScoreUpdate) {
+            UpdateScore();
+            if(Input.GetKeyDown(KeyCode.LeftBracket)) {
+                LevelDown();
+            }
+            if(Input.GetKeyDown(KeyCode.RightBracket)) {
+                LevelUp();
+            }
         }
-    } 
+    }
+
+    void ApplyRunningState(bool isRunning) {
+        this.doScoreUpdate = isRunning;
+        if(isRunning) {
+            ResetScores();
+        } else {
+            OnClearBubbles?.Invoke();
+        }
+    }
+
+    void ResetScores() {
+        Level.Value = 1;
+        levelUpReadyTracker.No();
+        accuracyTracker.Clear();
+        highestScore.Value = 0;
+        ScoreMachine.Put(INITIAL_SCORE);
+        Level.Value = 0;
+        OnClearBubbles?.Invoke();
+    }
 
     public void NotifyPop(BubblePopCategory category) {
         switch (category) {
@@ -68,8 +112,8 @@ public class BubbleGameScoreTracker : MonoBehaviour {
         accuracyTracker.Crop(Time.time);
         if (accuracyTracker.TryGetAverage(out var accuracy)) ScoreMachine.Push(accuracy, Time.deltaTime);
 
-        if(ScoreMachine.Score.Value < levelRegressAt && Level.Value>0) {
-            SetLevel(Level.Value - 1);
+        if(ScoreMachine.Score.Value < levelRegressAt) {
+            LevelDown();
         }
         
         if(ScoreMachine.Score.Value >= 0.8f) {
@@ -77,6 +121,10 @@ public class BubbleGameScoreTracker : MonoBehaviour {
         } else {
             levelUpReadyTracker.No();
         }
+    }
+
+    public void LevelDown() {
+        if(Level.Value > 0) SetLevel(Level.Value - 1);
     }
 
     public void LevelUp() {

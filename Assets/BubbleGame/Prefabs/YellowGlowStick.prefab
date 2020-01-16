@@ -7,16 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8110040632414526138, guid: 06d16f162a801ae458a9ddc401657cc1,
-        type: 3}
-      propertyPath: m_Height
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8110040632414526138, guid: 06d16f162a801ae458a9ddc401657cc1,
-        type: 3}
-      propertyPath: m_Center.y
-      value: 0.4
-      objectReference: {fileID: 0}
     - target: {fileID: 8110040634224135824, guid: 06d16f162a801ae458a9ddc401657cc1,
         type: 3}
       propertyPath: colorCode

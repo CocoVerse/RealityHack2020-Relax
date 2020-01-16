@@ -2,9 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Pop : MonoBehaviour
+public class GlowStick : MonoBehaviour
 {
     [SerializeField] BubbleColorCode colorCode;
+    [SerializeField] BubbleGameStateManager gameStateManager;
 
     private void OnTriggerEnter(Collider other) {
         var bubble = other.GetComponent<BubbleMove>();
@@ -25,5 +26,13 @@ public class Pop : MonoBehaviour
             default:
                 throw new ArgumentException();
         }
+    }
+
+    public void OnPickUp() {
+        gameStateManager?.NotifyPickUp(this);
+    }
+
+    public void OnPutDown() {
+        gameStateManager?.NotifyPutDown(this);
     }
 }

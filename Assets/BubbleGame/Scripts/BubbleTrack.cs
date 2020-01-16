@@ -63,11 +63,12 @@ public class BubbleTrack : MonoBehaviour {
     
     [SerializeField] List<BubbleMove> bubblePrefabs;
 
+    [SerializeField] BubbleGameStateManager stateManager;
+
     [SerializeField] BubbleGameScoreTracker scoreTracker;
 
     [SerializeField] MusicManager musicManager;
     
-
     float Interval => currentLevelParameters?.GetBatchInterval(bpm) ?? float.MaxValue;
 
     private BubbleGameLevelParameters currentLevelParameters;
@@ -75,10 +76,18 @@ public class BubbleTrack : MonoBehaviour {
     
     private float timeSinceWave = 0;
 
+    private bool doTick = false;
+
     private void Start() {
         musicManager.SelectedMusicGroup.Subscribe(ApplyMusicGroup).AddTo(this);
         bubbleHelperGroup = new BubbleHelperGroup(bubblePrefabs);
         scoreTracker.Level.Subscribe(i => currentLevelParameters = sequence.GetLevel(i));
+        stateManager.IsRunning.Subscribe(ApplyRunningState).AddTo(this);
+    }
+
+    void ApplyRunningState(bool isRunning) {
+        doTick = isRunning;
+        timeSinceWave = 0;
     }
 
     void ApplyMusicGroup(MusicGroup musicGroup) {
@@ -86,7 +95,8 @@ public class BubbleTrack : MonoBehaviour {
     }
     
     void Update()
-    { 
+    {
+        if (!doTick) return;
         timeSinceWave += Time.deltaTime;
         var interval = Interval;
         if(timeSinceWave > interval) {
